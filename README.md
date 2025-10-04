@@ -296,6 +296,20 @@ License: MIT © 2025
 Support: [Open GitHub Issue](https://github.com/Vikas-Yadav-6696/helmet-detection-system/issues)
 ---
 
+
+
+## 🙏 Special Thanks
+
+A huge **thank you to [Taskade](https://www.taskade.com/)** for providing the powerful platform and API infrastructure that made this **Helmet Detection System** possible.  
+
+Your tools for **project management, database integration, AI workflows, and automation** have been invaluable in building a **real-time, AI-powered safety compliance solution**.  
+
+We are grateful for the support, documentation, and flexibility that Taskade offers, enabling developers to **create smarter, safer, and more efficient applications**.  
+
+**Thank you for empowering innovation! ❤️**
+
+---
+
 **Built by [Vikas Yadav](https://github.com/Vikas-Yadav-6696) 
 
 
