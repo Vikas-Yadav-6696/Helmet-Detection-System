@@ -269,6 +269,22 @@ This project is part of the **Taskade Ecosystem**.
 Use is subject to the Taskade Developer Terms.
 
 ---
+## 🔔 Automation & Webhooks
+POST /api/taskade/webhooks/01K4Q7YYZZJEMJKBP57Y7X5766/run
+Payload example:
+```json
+{ "detectionId": "16956348570", "status": "no-helmet", "confidence": 0.87, "peopleCount": 2, "location": "Site B", "cameraId": "CAM-102" }
+```
+
+## 🔐 Security & Risk Levels
+| Risk | Description |
+|------|-------------|
+| 🟥 Critical | No helmet, multiple people, high confidence |
+| 🟧 High | No helmet, confidence > 80% |
+| 🟨 Medium | Helmet uncertain |
+| 🟩 Low | Helmet detected |
+
+
 
 ## 💬 Support
 For issues or questions:  
