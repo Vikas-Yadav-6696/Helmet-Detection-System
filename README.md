@@ -292,7 +292,8 @@ For issues or questions:
 - Review automation logs  
 - Verify API connection  
 - Contact Taskade support  
-
+License: MIT © 2025  
+Support: [Open GitHub Issue](https://github.com/Vikas-Yadav-6696/helmet-detection-system/issues)
 ---
 
 **Built by [Vikas Yadav](https://github.com/Vikas-Yadav-6696) ❤️**
