@@ -275,7 +275,6 @@ Payload example:
 ```json
 { "detectionId": "16956348570", "status": "no-helmet", "confidence": 0.87, "peopleCount": 2, "location": "Site B", "cameraId": "CAM-102" }
 ```
-![AI Detection Example](https://media.giphy.com/media/26AHG5KGFxSkUWw1i/giphy.gif)
 ---
 ## 🔐 Security & Risk Levels
 | Risk | Description |
