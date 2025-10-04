@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Helmet Detector Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* ===== BODY & FONT ===== */
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f0f2f5, #d1e8ff 25%, #ffffff 75%);
+      overflow-x: hidden;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1.75rem;
+    }
+
+    /* ===== MAIN ===== */
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      position: relative;
+    }
+
+    /* ===== IFRAME WRAPPER (3D EFFECT) ===== */
+    .iframe-wrapper {
+      width: 100%;
+      max-width: 1200px;
+      border-radius: 20px;
+      overflow: hidden;
+      background-color: #f0f2f5;
+      border: 3px solid #f0f2f5;
+      box-shadow: 0 30px 60px rgba(16,185,129,0.25), 0 15px 30px rgba(0,0,0,0.15);
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: floatIn 1s forwards 0.3s, floatLoop 6s ease-in-out infinite 1.3s;
+    }
+
+    .iframe-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      box-shadow: 0 0 40px rgba(16,185,129,0.3);
+      animation: glowPulse 2.5s ease-in-out infinite alternate;
+      z-index: -2;
+    }
+
+    .iframe-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: linear-gradient(145deg, rgba(16,185,129,0.05), rgba(16,185,129,0.1));
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .shadow-trail {
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: radial-gradient(rgba(16,185,129,0.15), transparent 70%);
+      filter: blur(30px);
+      transform: translateY(15px);
+      z-index: -3;
+      animation: shadowFloat 6s ease-in-out infinite 1.3s;
+    }
+
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 16px;
+      display: block;
+      position: relative;
+      z-index: 2;
+    }
+
+    .iframe-wrapper:hover {
+      transform: translateY(-10px) rotateX(3deg) rotateY(3deg);
+      box-shadow: 0 40px 80px rgba(16,185,129,0.3), 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background-color: #1e3a8a;
+      color: white;
+      text-align: center;
+      padding: 1rem 2rem;
+      font-size: 0.9rem;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* ===== SPINNER ===== */
+    .spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 4px solid rgba(16,185,129,0.2);
+      border-top-color: #10B981;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      animation: spin 1s linear infinite;
+      z-index: 20;
+    }
+
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes glowPulse { 0% { box-shadow:0 0 20px rgba(16,185,129,0.2);} 50% { box-shadow:0 0 50px rgba(16,185,129,0.35);} 100% {box-shadow:0 0 30px rgba(16,185,129,0.25);} }
+    @keyframes floatIn {0% { opacity:0; transform: translateY(50px); } 100% { opacity:1; transform: translateY(0); }}
+    @keyframes floatLoop {0%,100%{transform:translateY(0px);}50%{transform:translateY(-10px);}}
+    @keyframes shadowFloat {0%,100%{transform:translateY(15px);}50%{transform:translateY(5px);}}
+
+    @media (max-width: 768px){
+      iframe { height: 400px; }
+      .iframe-wrapper:hover { transform: translateY(-5px) rotateX(0deg) rotateY(0deg); box-shadow:0 15px 30px rgba(16,185,129,0.2),0 8px 15px rgba(0,0,0,0.1); }
+      .iframe-wrapper::after,.iframe-wrapper::before,.shadow-trail { border-radius: 18px; }
+    }
+
+    /* ===== ABOUT ME SIDEBAR ===== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -350px;
+      width: 320px;
+      max-width: 90%;
+      height: 100%;
+      background-color: #1e3a8a;
+      color: white;
+      padding: 2rem 1.5rem;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+      transition: right 0.4s ease;
+      z-index: 999;
+      overflow-y: auto;
+    }
+
+    .sidebar.active { right: 0; }
+
+    .sidebar h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      letter-spacing: 0.5px;
+      color: #fff;
+      border-bottom: 2px solid rgba(255,255,255,0.4);
+      padding-bottom: 0.5rem;
+    }
+
+    .sidebar img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      border: 2px solid #60a5fa;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .sidebar p, .sidebar a {
+      font-size: 0.95rem;
+      line-height: 1.6rem;
+      color: #f0f0f0;
+      margin-bottom: 0.8rem;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .sidebar p span { font-weight: 600; color: #60a5fa; }
+    .sidebar a { font-weight: 600; color: #60a5fa; text-decoration: underline; }
+
+    .sidebar.active p, .sidebar.active a { opacity: 1; transform: translateX(0); }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* ===== ABOUT ME BUTTON ===== */
+    .about-btn {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background-color: rgba(59, 130, 246, 0.85);;
+      color: white;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1000;
+      font-weight: 600;
+      transition: background 0.3s ease, box-shadow 0.4s ease, transform 0.2s ease;
+    }
+
+    .about-btn:hover {
+      background-color: #2563eb;
+      box-shadow: 0 0 15px #3b82f6, 0 0 30px #60a5fa;
+      transform: translateY(-2px);
+    }
+     footer a img:hover {
+    transform: scale(1.2); /* Slightly enlarge the icon on hover */
+  }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>Helmet Detector Dashboard</header>
+
+  <!-- ABOUT ME BUTTON -->
+  <button class="about-btn" onclick="toggleSidebar()">About Me</button>
+
+  <!-- ABOUT ME SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <button class="close-btn" onclick="toggleSidebar()">&times;</button>
+    <img src="https://avatars.githubusercontent.com/u/235852681?v=4" alt="Vikas Yadav">
+    <h2 align="center">About Me</h2>
+    <p>🎓 <span>Aspiring Software & AI Developer</span></p>
+    <p>💻 <span>Technical Skills:</span> Python, Java, C, HTML, CSS, JavaScript, W3.CSS, Bootstrap, Tailwind, AngularJS, React, Node.js, MySQL, MongoDB</p>
+    <p>📚 <span>Currently Learning:</span> Data Science & Artificial Intelligence</p>
+    <p>🚀 <span>Passionate About:</span> Building innovative and impactful projects, exploring emerging technologies, and creating scalable solutions</p>
+    <p>🤝 <span>Open To:</span> Collaborations in AI, Web Development, Full-Stack Development, and Open Source Projects</p>
+    <p>🌐 <span>GitHub:</span> <a href="https://github.com/Vikas-Yadav-6696" target="_blank">github.com/Vikas-Yadav-6696</a></p>
+  </div>
+
+  <!-- MAIN IFRAME SECTION -->
+  <main>
+    <div class="spinner" id="spinner"></div>
+    <div class="iframe-wrapper" id="iframeWrapper">
+      <div class="shadow-trail"></div>
+      <iframe src="https://helmet-detector-0hsx8s6s.taskade.app" id="helmetIframe" onload="onIframeLoad()"></iframe>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+
+
+<footer style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; text-align: center; padding: 10px;">
+  &copy; 2025 Helmet Detector | 👨‍💻 <span>Developed By:</span> Vikas Yadav 
+  <a href="https://github.com/Vikas-Yadav-6696" target="_blank">
+      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" alt="GitHub" width="25" height="25" style="fill:#000; transition: transform 0.3s;">
+  </a>
+</footer>
+
+  <script>
+    function onIframeLoad() {
+      document.getElementById('spinner').style.display = 'none';
+    }
+
+   function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const aboutBtn = document.querySelector('.about-btn');
+
+  sidebar.classList.toggle('active');
+
+  // Hide button when sidebar is open
+  if(sidebar.classList.contains('active')) {
+    aboutBtn.style.display = 'none';
+  } else {
+    aboutBtn.style.display = 'block';
+  }
+
+  // Animate children fade-in sequentially
+  const items = sidebar.querySelectorAll('p, a');
+  items.forEach((item, index) => {
+    if (sidebar.classList.contains('active')) {
+      item.style.transitionDelay = `${0.1 * index}s`;
+    } else {
+      item.style.transitionDelay = '0s';
+    }
+  });
+}
+
+  </script>
+
+</body>
+</html>
