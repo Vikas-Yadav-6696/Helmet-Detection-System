@@ -1,7 +1,90 @@
+# 🛡️ Helmet Detection System
+
+## 🚦 Complete AI-Powered Safety Compliance Monitoring Solution
+
+This project is an advanced **Helmet Detection System** built with **React + TypeScript**, fully integrated with **Taskade’s automation and database infrastructure**.  
+It provides real-time monitoring, automated safety alerts, and analytics dashboards for compliance management.
+
+---
+
+## 🌟 Features
+
+### 🖼️ 1. Image Upload Detection
+- Drag & drop or click to upload images  
+- Real-time AI processing simulation  
+- Automatic safety alert generation  
+- Detection results automatically stored in the database  
+
+### 🎥 2. Live Camera Detection
+- Real-time camera feed access  
+- Continuous helmet detection every 3 seconds  
+- Live overlay displaying detection results  
+- Start/Stop detection controls  
+
+### 🧾 3. Detection Results Database
+- Full history of all detections  
+- Filter by helmet/no helmet status or risk level  
+- Search functionality across all fields  
+- Export results to CSV  
+- Detailed detection view with real-time Taskade sync  
+
+### 📊 4. Statistics & Analytics
+- Real-time compliance metrics  
+- Hourly and daily trend analysis  
+- Confidence score distribution  
+- Safety status and risk-level indicators  
+
+### 🚨 5. Automated Safety Alerts
+- AI-powered risk assessment (Critical, High, Medium, Low)  
+- Automatic alert creation from detection results  
+- Smart AI-generated alert messages  
+- Integration with Taskade notification systems  
+
+---
+
+## 🏗️ System Architecture
+
+### 🖥️ Frontend (React App)
+- `App.tsx` – Main entry point  
+- `HelmetDetectionApp.tsx` – Core detection interface  
+- `ImageUpload.tsx` – Handles image uploads  
+- `VideoStream.tsx` – Manages live camera detection  
+- `DetectionResults.tsx` – Displays results and database integration  
+- `Statistics.tsx` – Analytics and metrics dashboard  
+
+### 🧠 Backend Integration
+- **Taskade Database:** Stores detection records  
+- **Safety Automation:** Sends automated alerts  
+- **Daily Report Generator:** Produces daily compliance summaries  
+
+---
+
+## 🗃️ Database Schema
+
+| Field | Type | Description |
+|-------|------|-------------|
+| Detection Status | Select | helmet-detected, no-helmet, uncertain |
+| Confidence Score | Number | AI confidence level (0–1) |
+| People Count | Number | Number of people detected |
+| Detection Location | String | Physical detection location |
+| Camera ID | String | Identifier for camera |
+| Alert Sent | Select | yes, no, pending |
+| Risk Level | Select | low, medium, high, critical |
+
+---
+
+## ⚡ Automation Workflows
+
+### 1. 🧩 Safety Alert System (Webhook Trigger)
+**Endpoint:** `/api/taskade/webhooks/01K4Q7YYZZJEMJKBP57Y7X5766/run`
+
+#### Example Input:
+```json
 {
-  "explanation": "Creating comprehensive README documentation for the Helmet Detection System",
-  "appId": "default",
-  "command": "create",
-  "path": "src/README.md",
-  "file_text": "# 🛡️ Helmet Detection System\n\n## Complete AI-Powered Safety Compliance Monitoring Solution\n\nThis is a comprehensive helmet detection system built with React, TypeScript, and integrated with Taskade's automation and database infrastructure.\n\n## 🌟 Features\n\n### 1. **Image Upload Detection**\n- Drag & drop or click to upload images\n- Real-time AI processing simulation\n- Automatic safety alert generation\n- Results saved to database\n\n### 2. **Live Camera Detection**\n- Real-time camera feed access\n- Continuous helmet detection every 3 seconds\n- Live overlay showing detection results\n- Start/stop controls for detection\n\n### 3. **Detection Results Database**\n- Complete history of all detections\n- Filter by helmet/no helmet status, risk level, alerts\n- Search functionality across all fields\n- Export results to CSV\n- Detailed view for each detection\n- Real-time sync with Taskade database\n\n### 4. **Statistics & Analytics**\n- Real-time compliance metrics\n- Hourly and daily trend analysis\n- Confidence score distribution\n- Safety status indicators\n- Risk assessment by location\n\n### 5. **Automated Safety Alerts**\n- Intelligent risk assessment (Critical, High, Medium, Low)\n- Automatic alert generation based on detection results\n- AI-powered alert messages\n- Integration with notification systems\n\n## 🏗️ System Architecture\n\n### Frontend (React App)\n- **App.tsx** - Main application entry\n- **HelmetDetectionApp.tsx** - Core detection interface\n- **ImageUpload.tsx** - Image upload component\n- **VideoStream.tsx** - Live camera detection\n- **DetectionResults.tsx** - Results display with database integration\n- **Statistics.tsx** - Analytics dashboard\n\n### Backend Integration\n- **Taskade Project Database** - Stores all detection records\n- **Safety Alert Automation** - Processes detections and sends alerts\n- **Daily Report Generator** - Automated daily safety reports\n\n## 📊 Database Schema\n\n### Detection Records Project\nCustom fields:\n- **Detection Status** (Select): helmet-detected, no-helmet, uncertain\n- **Confidence Score** (Number/Percent): AI confidence level\n- **People Count** (Number): Number of people detected\n- **Detection Location** (String): Physical location\n- **Camera ID** (String): Camera identifier\n- **Alert Sent** (Select): yes, no, pending\n- **Risk Level** (Select): low, medium, high, critical\n\n## ⚡ Automation Workflows\n\n### 1. Safety Alert System (Webhook Trigger)\n**Endpoint:** `/api/taskade/webhooks/01K4Q7YYZZJEMJKBP57Y7X5766/run`\n\n**Input:**\n```json\n{\n  \"detectionId\": \"string\",\n  \"status\": \"helmet-detected | no-helmet | uncertain\",\n  \"confidence\": 0.0-1.0,\n  \"peopleCount\": number,\n  \"location\": \"string\",\n  \"cameraId\": \"string\",\n  \"imageUrl\": \"string\"\n}\n```\n\n**Process:**\n1. Creates detection record in database\n2. Assesses risk level based on:\n   - Critical: No helmet + confidence ≥ 80%\n   - High: No helmet + multiple people\n   - Medium: No helmet (single person)\n   - Low: Helmet detected\n3. Generates AI-powered alert message\n4. Returns detection result with alert status\n\n### 2. Daily Safety Report (Scheduled Trigger)\n**Schedule:** Daily at 8:00 AM (America/New_York)\n\n**Process:**\n1. Retrieves all detection records\n2. Generates comprehensive safety report using AI\n3. Creates summary task in database\n4. Includes compliance analysis and recommendations\n\n## 🔌 API Integration\n\n### Get All Detections\n```javascript\nGET /api/taskade/projects/pArVAbb3LzUmJxxr/nodes\n```\n\n### Create Detection Record\n```javascript\nPOST /api/taskade/projects/pArVAbb3LzUmJxxr/nodes\n{\n  \"/text\": \"Detection description\",\n  \"/attributes/@det01\": \"helmet-detected\",\n  \"/attributes/@conf01\": 0.95,\n  \"/attributes/@people\": 2,\n  \"/attributes/@location\": \"Construction Site A\",\n  \"/attributes/@camera\": \"CAM-001\",\n  \"/attributes/@alert\": \"yes\",\n  \"/attributes/@severity\": \"low\"\n}\n```\n\n### Trigger Safety Alert\n```javascript\nPOST /api/taskade/webhooks/01K4Q7YYZZJEMJKBP57Y7X5766/run\n{\n  \"detectionId\": \"abc123\",\n  \"status\": \"no-helmet\",\n  \"confidence\": 0.92,\n  \"peopleCount\": 2,\n  \"location\": \"Factory Floor C\",\n  \"cameraId\": \"CAM-005\"\n}\n```\n\n## 🚀 Getting Started\n\n### Prerequisites\n- Node.js 18+\n- Modern web browser with camera access\n- Taskade workspace with API access\n\n### Installation\n```bash\nnpm install\nnpm run dev\n```\n\n### Configuration\nThe system is pre-configured with:\n- Database Project ID: `pArVAbb3LzUmJxxr`\n- Safety Alert Webhook: `01K4Q7YYZZJEMJKBP57Y7X5766`\n- Daily Report Workflow: `01K4Q84EN4841HR2WRD2T4XTWX`\n\n## 📱 Usage\n\n### Image Detection\n1. Navigate to \"Image Upload\" tab\n2. Drag & drop or select an image\n3. Click \"Analyze Image\"\n4. View results and automatic alert status\n\n### Live Detection\n1. Navigate to \"Live Detection\" tab\n2. Grant camera permissions\n3. Click \"Start Detection\"\n4. Monitor real-time detections and alerts\n\n### View Results\n1. Navigate to \"Detection Results\" tab\n2. Filter by status, risk level, or alerts\n3. Search across all fields\n4. Click any result for detailed view\n5. Export to CSV for reporting\n\n### Analytics\n1. Navigate to \"Statistics\" tab\n2. View compliance metrics\n3. Analyze hourly/daily trends\n4. Review confidence distribution\n5. Check safety status\n\n## 🔐 Security Features\n\n- Database connection status monitoring\n- Real-time alert system status\n- Secure API endpoints\n- Data validation and error handling\n\n## 📈 Performance\n\n- Optimized React components\n- Efficient state management\n- Real-time database sync\n- Responsive UI design\n- Mobile-friendly interface\n\n## 🛠️ Technology Stack\n\n- **Frontend:** React 18, TypeScript, Tailwind CSS\n- **UI Components:** Radix UI, Lucide Icons\n- **State Management:** React Hooks\n- **API Integration:** Fetch API, Axios\n- **Database:** Taskade Projects\n- **Automation:** Taskade Workflows\n- **AI:** Taskade AI Actions\n\n## 📝 License\n\nThis project is part of the Taskade ecosystem.\n\n## 🤝 Support\n\nFor issues or questions:\n- Check the Taskade documentation\n- Review automation workflow logs\n- Verify database connection status\n- Contact Taskade support\n\n---\n\n**Built Vikas Yadav ❤️**\n"
+  "detectionId": "abc123",
+  "status": "no-helmet",
+  "confidence": 0.92,
+  "peopleCount": 2,
+  "location": "Factory Floor C",
+  "cameraId": "CAM-005"
 }
