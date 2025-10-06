@@ -4,6 +4,12 @@
 
 The **Helmet Detection System** is a full-stack AI-based safety compliance solution designed to monitor and analyze helmet usage through image and live camera inputs.  
 Built using **React + TypeScript**, it integrates seamlessly with **Taskade's database** and **automation workflows** to ensure real-time detection, risk assessment, and reporting.
+<p align="center">
+  <a href="https://vikas-yadav-6696.github.io/Helmet-Detection-System/">
+    <img src="https://img.shields.io/badge/View%20Live%20Website-Visit-blue?style=for-the-badge&logo=github" alt="View Live Website">
+  </a>
+</p>
+
 
 ---
 
