@@ -317,7 +317,10 @@ We are grateful for the support, documentation, and flexibility that Taskade off
 ---
 
 **Built by [Vikas Yadav](https://github.com/Vikas-Yadav-6696) 
-
-
+<p align="center">
+  <a href="https://vikas-yadav-6696.github.io/Helmet-Detection-System/">
+    <img src="https://img.shields.io/badge/View%20Live%20Website-Visit-orange?style=plastic&logo=github" alt="View Live Website">
+  </a>
+</p>
 
 
